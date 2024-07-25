@@ -1,0 +1,59 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+*.Plo
+
+# Precompiled Headers
+*.gch
+*.pch
+config.status
+*.pc
+*.po
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+*.suo
+*.tlog
+*.idb
+*.log
+*.user
+*.ipch
+*.opendb
+*.db
+*.iobj
+*.ipdb
+*.pdb
+*.pb.cc
+*.pb.h
+*.lnk
+
+GM_TAG
+desktop.ini
+
+obj
+build
+bin/libs
+bin/depends
+vs
+.vcproject
+.vscode
+server-code-bin/
+
