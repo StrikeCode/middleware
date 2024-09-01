@@ -3,6 +3,8 @@
  * 时间:2024年08月18日 17:51:46
  * 介绍:线程安全的饿汉单例模式模板
  * */
+#ifndef MIDDLEWARES_SINGLETION_H
+#define MIDDLEWARES_SINGLETION_H
 #include <mutex>
 #include <memory>
 
@@ -70,3 +72,5 @@ int main()
 
     return 0;
 }*/
+#endif //MIDDLEWARES_SINGLETION_H
+
