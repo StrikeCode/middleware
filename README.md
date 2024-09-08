@@ -1,15 +1,29 @@
 # middleware
 
 - [ ] 线程池
+
 - [ ] 连接池
+
 - [ ] 内存池
+
 - [ ] 对象池
+
 - [ ] 无锁队列
-- [ ] 有锁的线程安全队列
-- [ ] 信号量(制作中....)
+
+- [ ] 消息队列
+
+- [ ] 有锁的线程安全队列和栈（制作中）
+
+  参考： https://www.bilibili.com/video/BV1qC4y1m7Bd/?spm_id_from=333.337.search-card.all.click&vd_source=65c689684e2132030c1deb78ddb112df
+
+- [x] 信号量
+
 - [x] 单例模板
+
 - [ ] 定时器
+
 - [ ] json读取工具
+
 - [ ] 日志模块
 
 
