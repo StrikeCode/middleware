@@ -5,4 +5,5 @@ set(CMAKE_CXX_STANDARD 11)
 
 add_executable(MyExecutable main.cpp
         Singleton.h
-        Semaphore.h)
+        Semaphore.h
+        ThreadSafeQue.h)
