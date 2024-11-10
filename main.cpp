@@ -7,7 +7,7 @@
 #include "ThreadSafeStack.h"
 
 using namespace std;
-#if 0 // 测试 线程安全的栈的并发操作，两个线程取，一个线程生产
+
 class MyClass
 {
 public:
@@ -30,7 +30,7 @@ void PrintMyClass(std::string consumer, std::shared_ptr<MyClass> data)
     std::lock_guard<std::mutex> lock(mtx_cout);
     std::cout << consumer << " pop data success , data is " << (*data) << std::endl;
 }
-
+#if 0 // 测试 线程安全的栈的并发操作，两个线程取，一个线程生产
 void TestThreadSafeStack()
 {
     threadsafe_stack_waitable<MyClass> stack;
@@ -74,8 +74,93 @@ void TestThreadSafeStack()
 }
 #endif
 
+void TestThreadSafeQue()
+{
+    ThreadSafeQueuePtr<MyClass> safe_que;
+
+    std::thread consumer1(
+            [&]()
+            {
+                for(;;)
+                {
+                    std::shared_ptr<MyClass> data = safe_que.wait_and_pop();
+                    PrintMyClass("consumer1", data);
+                }
+            }
+    );
+
+    std::thread consumer2(
+            [&]()
+            {
+                for(;;)
+                {
+                    std::shared_ptr<MyClass> data = safe_que.wait_and_pop();
+                    PrintMyClass("consumer2", data);
+                }
+            }
+    );
+
+    std::thread producer(
+            [&]()
+            {
+                for(int i = 0; i < 100; i++)
+                {
+                    MyClass mc(i);
+                    safe_que.push(std::move(mc));
+                }
+            }
+    );
+
+    consumer1.join();
+    consumer2.join();
+    producer.join();
+}
+
+void TestThreadSafeQueHt()
+{
+    ThreadSafeQueueHt<MyClass> safe_que;
+
+    std::thread consumer1(
+            [&]()
+            {
+                for(;;)
+                {
+                    std::shared_ptr<MyClass> data = safe_que.wait_and_pop();
+                    PrintMyClass("consumer1", data);
+                }
+            }
+    );
+
+    std::thread consumer2(
+            [&]()
+            {
+                for(;;)
+                {
+                    std::shared_ptr<MyClass> data = safe_que.wait_and_pop();
+                    PrintMyClass("consumer2", data);
+                }
+            }
+    );
+
+    std::thread producer(
+            [&]()
+            {
+                for(int i = 0; i < 100; i++)
+                {
+                    MyClass mc(i);
+                    safe_que.push(std::move(mc));
+                }
+            }
+    );
+
+    consumer1.join();
+    consumer2.join();
+    producer.join();
+}
 int main()
 {
 //    TestThreadSafeStack();
+//    TestThreadSafeQue();
+    TestThreadSafeQueHt();
     return 0;
 }
