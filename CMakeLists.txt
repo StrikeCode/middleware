@@ -7,4 +7,5 @@ add_executable(MyExecutable main.cpp
         Singleton.h
         Semaphore.h
         ThreadSafeQue.h
-        ThreadSafeStack.h)
+        ThreadSafeStack.h
+        LockFreeQue.h)

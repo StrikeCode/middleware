@@ -5,6 +5,7 @@
 #include "Semaphore.h"
 #include "ThreadSafeQue.h"
 #include "ThreadSafeStack.h"
+#include "LockFreeQue.h"
 
 using namespace std;
 
@@ -72,7 +73,6 @@ void TestThreadSafeStack()
     consumer2.join();
     producer.join();
 }
-#endif
 
 void TestThreadSafeQue()
 {
@@ -157,10 +157,12 @@ void TestThreadSafeQueHt()
     consumer2.join();
     producer.join();
 }
+#endif
 int main()
 {
 //    TestThreadSafeStack();
 //    TestThreadSafeQue();
-    TestThreadSafeQueHt();
+//    TestThreadSafeQueHt();
+    testLockFreeQue();
     return 0;
 }
