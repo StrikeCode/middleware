@@ -17,8 +17,8 @@
 //
 //memory_order_relaxed：最宽松的顺序，不保证任何操作顺序。
 //memory_order_consume：保证后续的操作依赖于当前的操作。
-//memory_order_acquire：保证当前操作之后的操作不会被提前执行。
-//memory_order_release：保证当前操作之前的操作不会被延迟执行。
+//memory_order_acquire：保证当前操作之后的操作不会被提前执行。 load
+//memory_order_release：保证当前操作之前的操作不会被延迟执行。 store
 //memory_order_acq_rel：同时包含acquire和release。
 //memory_order_seq_cst：最严格的顺序，所有线程的操作必须按顺序执行。
 
@@ -43,15 +43,18 @@ public:
               tail_(0) {}
 
     bool enqueue(const T& value) {
+//        不对内存操作进行同步，也就是没有任何的跨线程顺序保证，除了原子操作本身的原子性。
         size_t current_tail = tail_.load(std::memory_order_relaxed);
         size_t next_tail = (current_tail + 1) % size_; // 留一个位子用来区分满和空
-        // head_.load保证当前操作之后的操作不会被提前执行
+        // head_.load保证当前操作之后(读head_内容)的操作不会被提前执行
         if (next_tail == head_.load(std::memory_order_acquire)) {
             // Queue is full
             return false;
         }
 
         buffer_[current_tail] = value;
+        // tail_ = next_tail
+        // tail_ 写操作的结果会对其他线程可见，但它确保的是在写操作之前的所有操作已经完成。
         tail_.store(next_tail, std::memory_order_release);
         return true;
     }
@@ -59,15 +62,14 @@ public:
     bool dequeue(T& value) {
         size_t current_head = head_.load(std::memory_order_relaxed);
 
-//        acquire保证在此操作之前的所有内存操作（例如队列插入数据的操作）不会被重排到加载tail_操作之后。
-//        换句话说，所有与生产者队列插入相关的操作必须在tail_加载之前完成。
-//        通过这种方式，生产者能够读取到正确的队列尾部位置，确保后续操作不会错乱。
+//        这里再次读取 tail_ 变量的值，使用 std::memory_order_acquire，表示这是一次获取操作，会确保 tail_ 之前的所有操作完成。
         if (current_head == tail_.load(std::memory_order_acquire)) {
             // Queue is empty
             return false;
         }
 
         value = buffer_[current_head];
+//        这确保在更新 head_ 之前，当前线程的所有操作（包括队列消费的操作）都已完成。
         head_.store((current_head + 1) % size_, std::memory_order_release);
         return true;
     }
