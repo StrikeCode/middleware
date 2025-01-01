@@ -105,7 +105,7 @@ void consumer(LockFreeQueue<int>& queue, int num_consumes) {
     }
 }
 
-void testLockFreeQue() {
+void TestLockFreeQue() {
     const int queue_size = 5;
     const int num_items = 20;  // Number of items each thread will produce or consume
     LockFreeQueue<int> queue(queue_size);

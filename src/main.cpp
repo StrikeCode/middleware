@@ -1,11 +1,12 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include "Singleton.h"
-#include "Semaphore.h"
-#include "ThreadSafeQue.h"
-#include "ThreadSafeStack.h"
-#include "LockFreeQue.h"
+#include "../include/Singleton.h"
+#include "../include/Semaphore.h"
+#include "../include/ThreadSafeQue.h"
+#include "../include/ThreadSafeStack.h"
+#include "../include/LockFreeQue.h"
+#include "../include/ThreadPool.h"
 
 using namespace std;
 
@@ -163,6 +164,7 @@ int main()
 //    TestThreadSafeStack();
 //    TestThreadSafeQue();
 //    TestThreadSafeQueHt();
-    testLockFreeQue();
+//    TestLockFreeQue();
+    TestThreadPool();
     return 0;
 }

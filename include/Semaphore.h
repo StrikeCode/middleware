@@ -10,6 +10,7 @@
 #include <condition_variable>
 #include <vector>
 
+#if 0 // #1 implementation
 class Semaphore {
 public:
     // 单参数构造函数加 explicit 防止无意的隐式转换
@@ -32,7 +33,37 @@ private:
     std::condition_variable cv_;
     int count_;
 };
+#endif
 
+// 互斥锁 + 条件变量 实现 信号量 用于ThreadPool.h
+class Semaphore
+{
+public:
+    Semaphore(int limit = 0) : resLimit_(limit)
+    {}
+    ~Semaphore() = default;
+
+    // 获取一个信号量资源，名字也可改为 signal
+    void wait()
+    {
+        std::unique_lock<std::mutex> lock(mtx_);
+        // lambda返回若为false就循环wait
+        cond_.wait(lock, [&]()->bool { return resLimit_ > 0;});
+        resLimit_--;
+    }
+    // 增加一个信号量资源
+    void post()
+    {
+        std::unique_lock<std::mutex> lock(mtx_);
+        resLimit_++;
+        // 会唤醒所有等待队列中阻塞的线程，但是存在锁争用,只有一个线程能获得锁
+        cond_.notify_all();
+    }
+private:
+    int resLimit_;
+    std::mutex mtx_;
+    std::condition_variable cond_;
+};
 // How To Use:
 /*Semaphore Sem(1); // Initial count is 1 equal to mutex
 
