@@ -11,4 +11,6 @@ add_executable(MyExecutable src/main.cpp
         include/LockFreeQue.h
         include/ThreadPool.h
         src/ThreadPool.cpp
+        include/RingLog.h
+        src/RingLog.cpp
 )
