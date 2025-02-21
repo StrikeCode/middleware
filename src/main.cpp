@@ -8,6 +8,7 @@
 #include "../include/LockFreeQue.h"
 #include "../include/ThreadPool.h"
 #include "../include/RingLog.h"
+#include "../include/json11.h"
 
 using namespace std;
 
@@ -194,6 +195,24 @@ void TestRingLogMultiThread()
     for (int i = 0;i < 5; ++i)
         pthread_join(tids[i], NULL);
 }
+
+using namespace json11;
+
+void testJsonParser()
+{
+    // R"(...)" 之间的内容会被直接当作字符串处理，不会对其中的特殊字符进行转义处理。这样可以方便地表示包含复杂内容的字符串。
+    const string simple_test =
+            R"({"k1":"v1", "k2":42, "k3":["a",123,true,false,null]})";
+    string err;
+    const auto json = Json::parse(simple_test, err);
+
+    std::cout << "ttl: " << json["ttl"].int_value() << "\n";
+    std::cout << "data: " << json["data"].dump() << "\n";
+
+    for (auto &k : json["data"].array_items()) {
+        std::cout << "    - " << k.dump() << "\n";
+    }
+}
 int main()
 {
 //    TestThreadSafeStack();
@@ -201,8 +220,10 @@ int main()
 //    TestThreadSafeQueHt();
 //    TestLockFreeQue();
 //    TestThreadPool();
-    TestRingLogSingleThread();
+//    TestRingLogSingleThread();
 //    TestRingLogMultiThread();
+
+    testJsonParser();
 
     return 0;
 }
