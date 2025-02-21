@@ -13,4 +13,7 @@ add_executable(MyExecutable src/main.cpp
         src/ThreadPool.cpp
         include/RingLog.h
         src/RingLog.cpp
+        include/json11.h
+        src/json11.cpp
+        tests/jsonTest.cpp
 )
