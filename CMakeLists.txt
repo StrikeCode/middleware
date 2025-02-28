@@ -26,3 +26,5 @@ add_executable(JsonTest
 add_executable(Reflection include/Reflect.h
         src/Primitives.cpp
         tests/ReflectTest.cpp)
+add_executable(ObjectPool include/ObjectPool.h
+        tests/ObjectPoolTest.cpp)
