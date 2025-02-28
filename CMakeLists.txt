@@ -15,5 +15,14 @@ add_executable(MyExecutable src/main.cpp
         src/RingLog.cpp
         include/json11.h
         src/json11.cpp
-        tests/jsonTest.cpp
+        tests/JsonTest.cpp
 )
+
+add_executable(JsonTest
+        include/json11.h
+        src/json11.cpp
+        tests/JsonTest.cpp
+)
+add_executable(Reflection include/Reflect.h
+        src/Primitives.cpp
+        tests/ReflectTest.cpp)

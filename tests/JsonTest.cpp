@@ -273,7 +273,7 @@ static void parse_from_stdin() {
     }
 }
 
-int main1(int argc, char **argv) {
+int main(int argc, char **argv) {
     if (argc == 2 && argv[1] == string("--stdin")) {
         parse_from_stdin();
         return 0;
