@@ -28,6 +28,9 @@ add_executable(Reflection include/Reflect.h
         tests/ReflectTest.cpp)
 add_executable(ObjectPool include/ObjectPool.h
         tests/ObjectPoolTest.cpp)
+add_executable(TimerTest include/Timer.h
+        tests/TimerTest.cpp
+)
 add_executable(ConnPool include/Connection.h
         src/Connection.cpp
         include/CommonConnectionPool.h
