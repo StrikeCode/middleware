@@ -28,3 +28,8 @@ add_executable(Reflection include/Reflect.h
         tests/ReflectTest.cpp)
 add_executable(ObjectPool include/ObjectPool.h
         tests/ObjectPoolTest.cpp)
+add_executable(ConnPool include/Connection.h
+        src/Connection.cpp
+        include/CommonConnectionPool.h
+        src/CommonConnectionPool.cpp
+        tests/ConnPoolTest.cpp)
