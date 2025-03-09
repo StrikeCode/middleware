@@ -3,6 +3,10 @@ project(Middlewares)
 
 set(CMAKE_CXX_STANDARD 17)
 
+include_directories(/usr/local/mysql/include)
+
+link_directories(/usr/local/mysql/lib)
+
 add_executable(MyExecutable src/main.cpp
         include/Singleton.h
         include/Semaphore.h
@@ -35,4 +39,9 @@ add_executable(ConnPool include/Connection.h
         src/Connection.cpp
         include/CommonConnectionPool.h
         src/CommonConnectionPool.cpp
-        tests/ConnPoolTest.cpp)
+        tests/ConnPoolTest.cpp
+        include/RingLog.h
+        src/RingLog.cpp)
+
+# 明确指定要连接的库
+target_link_libraries(ConnPool mysqlclient)

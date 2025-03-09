@@ -2,6 +2,7 @@
 // Created by Administrator on 2025/3/4.
 //
 #include "../include/Connection.h"
+#include "../include/RingLog.h"
 #include <iostream>
 using namespace std;
 
@@ -32,7 +33,7 @@ bool Connection::update(string sql)
     // 更新操作 insert、delete、update
     if (mysql_query(_conn, sql.c_str()))
     {
-        LOG("更新失败:" + sql);
+        LOG_ERROR("更新失败:%s",sql.c_str());
         return false;
     }
     return true;
@@ -43,7 +44,7 @@ MYSQL_RES* Connection::query(string sql)
     // 查询操作 select
     if (mysql_query(_conn, sql.c_str()))
     {
-        LOG("查询失败:" + sql);
+        LOG_ERROR("查询失败:%s", sql.c_str());
         return nullptr;
     }
     // 直接从服务器读取一个查询的结果而不是存储它到一个临时表或者一个客户端的缓存里面

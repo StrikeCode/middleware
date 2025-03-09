@@ -3,6 +3,7 @@
 //
 
 #include "../include/CommonConnectionPool.h"
+#include "../include/RingLog.h"
 // 线程安全的懒汉单例函数接口
 ConnectionPool* ConnectionPool::getConnectionPool()
 {
@@ -13,10 +14,10 @@ ConnectionPool* ConnectionPool::getConnectionPool()
 // 从配置文件中加载配置项
 bool ConnectionPool::loadConfigFile()
 {
-    FILE *pf = fopen("mysql.ini", "r");
+    FILE *pf = fopen("../config_file/mysql.ini", "r");
     if (pf == nullptr)
     {
-        LOG("mysql.ini file is not exist!");
+        LOG_ERROR("mysql.ini file is not exist!");
         return false;
     }
 
@@ -143,7 +144,7 @@ shared_ptr<Connection> ConnectionPool::getConnection()
         {
             if (_connectionQue.empty())
             {
-                LOG("获取空闲连接超时了...获取连接失败!");
+                LOG_ERROR("获取空闲连接超时了...获取连接失败!");
                 return nullptr;
             }
         }
