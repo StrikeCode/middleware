@@ -45,3 +45,8 @@ add_executable(ConnPool include/Connection.h
 
 # 明确指定要连接的库
 target_link_libraries(ConnPool mysqlclient)
+add_executable(MsgQueTest include/Msg.h
+        include/MsgQueue.h
+        src/Msg.cpp
+        src/MsgQueue.cpp
+        tests/MsgQueTest.cpp)
