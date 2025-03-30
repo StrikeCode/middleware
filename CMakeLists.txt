@@ -50,3 +50,6 @@ add_executable(MsgQueTest include/Msg.h
         src/Msg.cpp
         src/MsgQueue.cpp
         tests/MsgQueTest.cpp)
+add_executable(MemoryPoolTest include/MemoryPool.h
+        tests/MemoryPoolTest.cpp
+        include/StackAlloc.h)
